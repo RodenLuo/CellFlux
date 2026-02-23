@@ -367,6 +367,8 @@ def run_api(args):
         {
             "drug_name": "taxol",
             "perturbed_image_base64": "<base64-encoded PNG>",
+            "perturbed_npy_base64": "<base64-encoded .npy bytes>",
+            "control_npy_base64": "<base64-encoded .npy bytes>",
             "image_shape": [96, 96, 3]
         }
         """
@@ -398,16 +400,27 @@ def run_api(args):
             img.save(buf, format="PNG")
             img_b64 = base64.b64encode(buf.getvalue()).decode("utf-8")
 
-            # Also encode control image
+            # Also encode control image as PNG
             ctrl_img = Image.fromarray(cell_img)
             ctrl_buf = io.BytesIO()
             ctrl_img.save(ctrl_buf, format="PNG")
             ctrl_b64 = base64.b64encode(ctrl_buf.getvalue()).decode("utf-8")
 
+            # Encode as raw .npy (lossless)
+            pred_npy_buf = io.BytesIO()
+            np.save(pred_npy_buf, result["perturbed_image"])
+            pred_npy_b64 = base64.b64encode(pred_npy_buf.getvalue()).decode("utf-8")
+
+            ctrl_npy_buf = io.BytesIO()
+            np.save(ctrl_npy_buf, cell_img)
+            ctrl_npy_b64 = base64.b64encode(ctrl_npy_buf.getvalue()).decode("utf-8")
+
             return jsonify({
                 "drug_name": drug_name,
                 "perturbed_image_base64": img_b64,
                 "control_image_base64": ctrl_b64,
+                "perturbed_npy_base64": pred_npy_b64,
+                "control_npy_base64": ctrl_npy_b64,
                 "image_shape": list(result["perturbed_image"].shape),
             })
         except ValueError as e:

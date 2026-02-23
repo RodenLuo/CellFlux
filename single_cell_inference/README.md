@@ -160,19 +160,33 @@ curl -X POST http://localhost:5000/predict \
   "drug_name": "taxol",
   "perturbed_image_base64": "<base64-encoded PNG>",
   "control_image_base64": "<base64-encoded PNG>",
+  "perturbed_npy_base64": "<base64-encoded .npy bytes>",
+  "control_npy_base64": "<base64-encoded .npy bytes>",
   "image_shape": [96, 96, 3]
 }
 ```
 
-To decode and save the output image (Python):
+#### Python client example
 
 ```python
+import requests
 import base64
-import json
+import numpy as np
+import io
 
-resp = json.loads(response_text)
-with open("perturbed.png", "wb") as f:
-    f.write(base64.b64decode(resp["perturbed_image_base64"]))
+resp = requests.post("http://localhost:5000/predict", json={
+    "drug_name": "taxol",
+    "use_random_control": True,
+}).json()
+
+# Save as .npy (lossless)
+perturbed = np.load(io.BytesIO(base64.b64decode(resp["perturbed_npy_base64"])))
+np.save("perturbed.npy", perturbed)
+
+control = np.load(io.BytesIO(base64.b64decode(resp["control_npy_base64"])))
+np.save("control.npy", control)
+
+print(f"perturbed: shape={perturbed.shape}, dtype={perturbed.dtype}")
 ```
 
 ### 5. Stop the server
