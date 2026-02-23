@@ -1,3 +1,6 @@
 **/outputs/
 **/__pycache__/
 **/shared/
+**/logs/
+single_cell_inference/output/
+single_cell_inference/output_bak/

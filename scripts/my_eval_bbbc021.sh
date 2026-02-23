@@ -1,3 +1,4 @@
+source ~/miniconda3/etc/profile.d/conda.sh
 conda activate cellflux
 
 python submitit_train.py \
@@ -16,12 +17,14 @@ python submitit_train.py \
     --edm_schedule \
     --skewed_timesteps \
     --fid_samples=30720 \
-    --job_dir=/path/to/your/outputs/ \
-    --shared_dir=/path/to/your/shared/ \
+    --job_dir=/lustre/scratch/users/deng.luo/cellflux_outputs/bbbc021_eval \
+    --shared_dir=/lustre/scratch/users/deng.luo/cellflux_outputs/shared \
     --use_initial=2 \
     --eval_only \
     --noise_level=1.0 \
     --save_fid_samples \
-    --resume=/path/to/your/checkpoint.pth \
-    --start_epoch=your_start_epoch \
+    --resume=/lustre/scratch/users/deng.luo/cellflux_data/hf_repo/checkpoints/cellflux/bbbc021/checkpoint.pth \
+    --start_epoch=0 \
     --ngpus=4 \
+    --partition=gpumid \
+    --constraint=""

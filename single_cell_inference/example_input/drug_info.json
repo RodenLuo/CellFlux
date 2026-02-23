@@ -1,0 +1,8 @@
+{
+  "drug_name": "lactacystin",
+  "treated_sample_key": "Week6_31661_6_246_80.0",
+  "control_sample_key": "Week6_31661_6_282_31.0",
+  "treated_score": 456.371802019033,
+  "control_score": 383.8163085133745,
+  "batch": "Week6_31661"
+}
