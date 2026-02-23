@@ -10,14 +10,35 @@ Predict drug-perturbed cell images from control (unperturbed) cell images using 
 ```bash
 cd /home/deng.luo/projects/CellFlux/single_cell_inference
 
-# Predict with ground truth comparison
+# Run with example input (lactacystin, with ground truth comparison)
 sbatch scripts/run_inference.sh \
     --drug_name lactacystin \
     --cell_image example_input/control_cell.npy \
     --ground_truth example_input/ground_truth.npy \
     --output output/output_perturbed.png
+```
 
-# Predict without ground truth
+This produces 4 output files:
+
+| File | Description |
+|---|---|
+| `output/output_perturbed.png` | Predicted perturbed cell image |
+| `output/output_perturbed.npy` | Raw numpy array of the prediction |
+| `output/output_perturbed_comparison.png` | Side-by-side: control \| predicted |
+| `output/output_perturbed_comparison_gt.png` | Side-by-side: control \| predicted \| ground truth |
+
+Check job status and output:
+
+```bash
+squeue -u $USER
+cat logs/inference_<JOBID>.out
+cat logs/inference_<JOBID>.err
+```
+
+More examples:
+
+```bash
+# Without ground truth (produces 3 files, no _comparison_gt.png)
 sbatch scripts/run_inference.sh \
     --drug_name taxol \
     --cell_image example_input/control_cell.npy \
@@ -27,14 +48,6 @@ sbatch scripts/run_inference.sh \
 sbatch scripts/run_inference.sh \
     --drug_name taxol \
     --output output/output_perturbed.png
-```
-
-Check job status and output:
-
-```bash
-squeue -u $USER
-cat logs/inference_<JOBID>.out
-cat logs/inference_<JOBID>.err
 ```
 
 ## Batch Inference
