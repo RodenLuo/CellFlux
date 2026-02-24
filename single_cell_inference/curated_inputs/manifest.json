@@ -1,0 +1,284 @@
+[
+  {
+    "drug": "cytochalasin D",
+    "dir": "002_cytochalasin D",
+    "ctrl_score": 302.5,
+    "gt_score": 293.4
+  },
+  {
+    "drug": "ALLN",
+    "dir": "005_ALLN",
+    "ctrl_score": 394.3,
+    "gt_score": 279.7
+  },
+  {
+    "drug": "epothilone B",
+    "dir": "007_epothilone B",
+    "ctrl_score": 284.4,
+    "gt_score": 371.4
+  },
+  {
+    "drug": "cyclohexamide",
+    "dir": "011_cyclohexamide",
+    "ctrl_score": 406.1,
+    "gt_score": 343.8
+  },
+  {
+    "drug": "ALLN",
+    "dir": "015_ALLN",
+    "ctrl_score": 237.2,
+    "gt_score": 357.1
+  },
+  {
+    "drug": "lactacystin",
+    "dir": "016_lactacystin",
+    "ctrl_score": 333.2,
+    "gt_score": 456.4
+  },
+  {
+    "drug": "ALLN",
+    "dir": "020_ALLN",
+    "ctrl_score": 302.5,
+    "gt_score": 272.4
+  },
+  {
+    "drug": "MG-132",
+    "dir": "022_MG-132",
+    "ctrl_score": 341.2,
+    "gt_score": 374.9
+  },
+  {
+    "drug": "camptothecin",
+    "dir": "023_camptothecin",
+    "ctrl_score": 345.8,
+    "gt_score": 372.1
+  },
+  {
+    "drug": "anisomycin",
+    "dir": "024_anisomycin",
+    "ctrl_score": 383.4,
+    "gt_score": 276.0
+  },
+  {
+    "drug": "vincristine",
+    "dir": "025_vincristine",
+    "ctrl_score": 285.0,
+    "gt_score": 221.0
+  },
+  {
+    "drug": "cytochalasin D",
+    "dir": "027_cytochalasin D",
+    "ctrl_score": 237.2,
+    "gt_score": 341.6
+  },
+  {
+    "drug": "lactacystin",
+    "dir": "029_lactacystin",
+    "ctrl_score": 296.6,
+    "gt_score": 336.5
+  },
+  {
+    "drug": "methotrexate",
+    "dir": "030_methotrexate",
+    "ctrl_score": 262.3,
+    "gt_score": 368.1
+  },
+  {
+    "drug": "camptothecin",
+    "dir": "031_camptothecin",
+    "ctrl_score": 268.9,
+    "gt_score": 393.3
+  },
+  {
+    "drug": "cyclohexamide",
+    "dir": "034_cyclohexamide",
+    "ctrl_score": 369.1,
+    "gt_score": 337.4
+  },
+  {
+    "drug": "AZ138",
+    "dir": "035_AZ138",
+    "ctrl_score": 415.0,
+    "gt_score": 272.4
+  },
+  {
+    "drug": "cytochalasin B",
+    "dir": "037_cytochalasin B",
+    "ctrl_score": 312.1,
+    "gt_score": 349.7
+  },
+  {
+    "drug": "simvastatin",
+    "dir": "039_simvastatin",
+    "ctrl_score": 365.8,
+    "gt_score": 228.1
+  },
+  {
+    "drug": "epothilone B",
+    "dir": "041_epothilone B",
+    "ctrl_score": 326.0,
+    "gt_score": 315.6
+  },
+  {
+    "drug": "nocodazole",
+    "dir": "042_nocodazole",
+    "ctrl_score": 352.4,
+    "gt_score": 313.6
+  },
+  {
+    "drug": "cyclohexamide",
+    "dir": "044_cyclohexamide",
+    "ctrl_score": 406.1,
+    "gt_score": 388.8
+  },
+  {
+    "drug": "camptothecin",
+    "dir": "047_camptothecin",
+    "ctrl_score": 366.6,
+    "gt_score": 303.2
+  },
+  {
+    "drug": "AZ138",
+    "dir": "050_AZ138",
+    "ctrl_score": 415.0,
+    "gt_score": 411.1
+  },
+  {
+    "drug": "mevinolin_lovastatin",
+    "dir": "055_mevinolin_lovastatin",
+    "ctrl_score": 334.5,
+    "gt_score": 274.6
+  },
+  {
+    "drug": "taxol",
+    "dir": "056_taxol",
+    "ctrl_score": 312.1,
+    "gt_score": 212.9
+  },
+  {
+    "drug": "mitomycin C",
+    "dir": "060_mitomycin C",
+    "ctrl_score": 305.7,
+    "gt_score": 255.5
+  },
+  {
+    "drug": "MG-132",
+    "dir": "061_MG-132",
+    "ctrl_score": 341.2,
+    "gt_score": 321.1
+  },
+  {
+    "drug": "simvastatin",
+    "dir": "063_simvastatin",
+    "ctrl_score": 239.5,
+    "gt_score": 268.8
+  },
+  {
+    "drug": "PP-2",
+    "dir": "066_PP-2",
+    "ctrl_score": 364.0,
+    "gt_score": 365.2
+  },
+  {
+    "drug": "camptothecin",
+    "dir": "068_camptothecin",
+    "ctrl_score": 377.5,
+    "gt_score": 346.0
+  },
+  {
+    "drug": "mevinolin_lovastatin",
+    "dir": "070_mevinolin_lovastatin",
+    "ctrl_score": 334.5,
+    "gt_score": 330.8
+  },
+  {
+    "drug": "mevinolin_lovastatin",
+    "dir": "071_mevinolin_lovastatin",
+    "ctrl_score": 334.5,
+    "gt_score": 314.8
+  },
+  {
+    "drug": "cyclohexamide",
+    "dir": "072_cyclohexamide",
+    "ctrl_score": 406.1,
+    "gt_score": 384.0
+  },
+  {
+    "drug": "cyclohexamide",
+    "dir": "073_cyclohexamide",
+    "ctrl_score": 305.7,
+    "gt_score": 466.8
+  },
+  {
+    "drug": "mitoxantrone",
+    "dir": "074_mitoxantrone",
+    "ctrl_score": 282.6,
+    "gt_score": 192.7
+  },
+  {
+    "drug": "MG-132",
+    "dir": "077_MG-132",
+    "ctrl_score": 355.4,
+    "gt_score": 339.3
+  },
+  {
+    "drug": "mitoxantrone",
+    "dir": "078_mitoxantrone",
+    "ctrl_score": 285.7,
+    "gt_score": 333.6
+  },
+  {
+    "drug": "camptothecin",
+    "dir": "082_camptothecin",
+    "ctrl_score": 322.0,
+    "gt_score": 298.5
+  },
+  {
+    "drug": "lactacystin",
+    "dir": "085_lactacystin",
+    "ctrl_score": 383.9,
+    "gt_score": 232.5
+  },
+  {
+    "drug": "ALLN",
+    "dir": "087_ALLN",
+    "ctrl_score": 315.2,
+    "gt_score": 355.7
+  },
+  {
+    "drug": "simvastatin",
+    "dir": "089_simvastatin",
+    "ctrl_score": 307.0,
+    "gt_score": 230.4
+  },
+  {
+    "drug": "epothilone B",
+    "dir": "094_epothilone B",
+    "ctrl_score": 326.0,
+    "gt_score": 282.1
+  },
+  {
+    "drug": "anisomycin",
+    "dir": "095_anisomycin",
+    "ctrl_score": 383.4,
+    "gt_score": 385.3
+  },
+  {
+    "drug": "epothilone B",
+    "dir": "097_epothilone B",
+    "ctrl_score": 326.0,
+    "gt_score": 264.9
+  },
+  {
+    "drug": "vincristine",
+    "dir": "098_vincristine",
+    "ctrl_score": 285.0,
+    "gt_score": 73.3
+  },
+  {
+    "drug": "MG-132",
+    "dir": "099_MG-132",
+    "ctrl_score": 414.2,
+    "gt_score": 341.3
+  }
+]

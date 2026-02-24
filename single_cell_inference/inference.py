@@ -248,6 +248,60 @@ def get_random_control_image(metadata_path=DEFAULT_METADATA_PATH, image_path=DEF
     return img, str(npy_path)
 
 
+# ── Curated inputs (pre-vetted single clear cells) ──────────────────────────
+CURATED_DIR = Path(__file__).parent / "curated_inputs"
+CURATED_MANIFEST = CURATED_DIR / "manifest.json"
+
+
+def load_curated_manifest():
+    """Load the curated inputs manifest (cached)."""
+    if not hasattr(load_curated_manifest, "_cache"):
+        with open(CURATED_MANIFEST) as f:
+            load_curated_manifest._cache = json.load(f)
+        logger.info(f"Loaded {len(load_curated_manifest._cache)} curated inputs from {CURATED_MANIFEST}")
+    return load_curated_manifest._cache
+
+
+def get_random_curated_input(drug_name=None):
+    """
+    Pick a random pre-vetted control+ground_truth pair from curated inputs.
+
+    Args:
+        drug_name: if specified, pick a candidate matching this drug.
+                   If None, pick any random candidate (and return its drug name).
+
+    Returns:
+        dict with keys:
+            - "control_image": numpy array (96, 96, 3), uint8
+            - "ground_truth_image": numpy array (96, 96, 3), uint8
+            - "drug_name": str
+            - "dir": str (candidate directory name)
+    """
+    manifest = load_curated_manifest()
+
+    if drug_name:
+        pool = [c for c in manifest if c["drug"] == drug_name]
+        if not pool:
+            pool = manifest
+            logger.warning(f"No curated input for drug '{drug_name}', using random candidate")
+    else:
+        pool = manifest
+
+    choice = pool[np.random.randint(len(pool))]
+    candidate_dir = CURATED_DIR / choice["dir"]
+
+    ctrl_img = np.load(candidate_dir / "control.npy")
+    gt_img = np.load(candidate_dir / "ground_truth.npy")
+
+    logger.info(f"Curated input: {choice['dir']} (drug={choice['drug']})")
+    return {
+        "control_image": ctrl_img,
+        "ground_truth_image": gt_img,
+        "drug_name": choice["drug"],
+        "dir": choice["dir"],
+    }
+
+
 def save_comparison(ctrl_img, perturbed_img, drug_name, output_path, ground_truth_img=None):
     """
     Save a side-by-side comparison image.
@@ -363,22 +417,34 @@ def run_api(args):
             "use_random_control": true                            // optional, default false
         }
 
+        When use_random_control=true, picks from curated pre-vetted single-cell
+        inputs (47 candidates). The drug_name is used to filter candidates; if no
+        match, a random candidate is chosen and its drug_name is returned.
+
         Response JSON:
         {
             "drug_name": "taxol",
             "perturbed_image_base64": "<base64-encoded PNG>",
+            "control_image_base64": "<base64-encoded PNG>",
             "perturbed_npy_base64": "<base64-encoded .npy bytes>",
             "control_npy_base64": "<base64-encoded .npy bytes>",
+            "ground_truth_image_base64": "<base64-encoded PNG>",      // only with use_random_control
+            "ground_truth_npy_base64": "<base64-encoded .npy bytes>", // only with use_random_control
             "image_shape": [96, 96, 3]
         }
         """
         data = request.get_json()
-        if not data or "drug_name" not in data:
-            return jsonify({"error": "drug_name is required"}), 400
+        if not data:
+            return jsonify({"error": "Request body is required"}), 400
 
-        drug_name = data["drug_name"]
+        # drug_name is optional when use_random_control=true (curated input provides it)
+        if "drug_name" not in data and not data.get("use_random_control", False):
+            return jsonify({"error": "drug_name is required (or set use_random_control=true)"}), 400
+
+        drug_name = data.get("drug_name")
 
         # Get cell image
+        gt_img = None
         try:
             if "cell_image_base64" in data:
                 npy_bytes = base64.b64decode(data["cell_image_base64"])
@@ -386,7 +452,11 @@ def run_api(args):
             elif "cell_image_path" in data:
                 cell_img = np.load(data["cell_image_path"])
             elif data.get("use_random_control", False):
-                cell_img, _ = get_random_control_image(args.metadata, args.image_path)
+                # Use curated pre-vetted inputs (clear single cells)
+                curated = get_random_curated_input(drug_name=drug_name)
+                cell_img = curated["control_image"]
+                gt_img = curated["ground_truth_image"]
+                drug_name = curated["drug_name"]
             else:
                 return jsonify({
                     "error": "Provide cell_image_base64, cell_image_path, or set use_random_control=true"
@@ -415,14 +485,26 @@ def run_api(args):
             np.save(ctrl_npy_buf, cell_img)
             ctrl_npy_b64 = base64.b64encode(ctrl_npy_buf.getvalue()).decode("utf-8")
 
-            return jsonify({
+            response = {
                 "drug_name": drug_name,
                 "perturbed_image_base64": img_b64,
                 "control_image_base64": ctrl_b64,
                 "perturbed_npy_base64": pred_npy_b64,
                 "control_npy_base64": ctrl_npy_b64,
                 "image_shape": list(result["perturbed_image"].shape),
-            })
+            }
+
+            # Include ground truth if available (from curated inputs)
+            if gt_img is not None:
+                gt_png_buf = io.BytesIO()
+                Image.fromarray(gt_img).save(gt_png_buf, format="PNG")
+                response["ground_truth_image_base64"] = base64.b64encode(gt_png_buf.getvalue()).decode("utf-8")
+
+                gt_npy_buf = io.BytesIO()
+                np.save(gt_npy_buf, gt_img)
+                response["ground_truth_npy_base64"] = base64.b64encode(gt_npy_buf.getvalue()).decode("utf-8")
+
+            return jsonify(response)
         except ValueError as e:
             return jsonify({"error": str(e)}), 400
         except Exception as e:
